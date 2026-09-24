@@ -28,28 +28,6 @@ namespace Ucu.Poo.RideShare
                 return;
             }
 
-            ulong channelId = ulong.Parse(channelText);
-
-            DiscordClient discord = new DiscordClient();
-
-            /*
-            Mira a continuación cómo enviar mensajes y archivos a Discord;
-            deberás hacer lo mismo en las clases y métodos adecuados de tu
-            solución. Luego puedes comentar o eliminar este código.
-            */
-
-            Console.WriteLine("Conectando con Discord...");
-            discord.Login(botToken);
-            discord.SendMessage(channelId, "¡Hola desde C#!");
-            discord.SendImage(channelId, "bill.jpg", "Mira esta imagen");
-            Console.WriteLine("Mensajes enviados.");
-
-            /*
-            Mira a continuación cómo validar caras y caras con lentes para el
-            desafío 3; deberás hacer lo mismo en las clases y métodos adecuados
-            de tu solución. Luego puedes comentar o eliminar este código.
-            */
-
             string subscriptionKey = Environment.GetEnvironmentVariable("AZURE_FACE_SUBSCRIPTION_KEY");
             if (string.IsNullOrWhiteSpace(subscriptionKey))
             {
@@ -57,46 +35,35 @@ namespace Ucu.Poo.RideShare
                 return;
             }
 
-            CognitiveFace face = new CognitiveFace();
-            CognitiveFace.RecognitionResult result = face.Recognize("bill.jpg");
-            if (result.Success && result.FaceFound)
-            {
-                Console.WriteLine("Hay una cara 😀");
-            }
-            result = face.Recognize("rick.jpg");
-            if (result.Success && result.GlassesFound)
-            {
-                Console.WriteLine("Hay una cara con lentes 🤓");
-            }
+            ulong channelId = ulong.Parse(channelText);
 
-            /*
-            En este método deberás mostrar un ejemplo de funcionamiento de tu
-            solución. A continuación te planteamos un ejemplo de como hacerlo.
-            Esto no significa que te limites a hacer solamente esto, ¡debes
-            pensar en grande!
+            DiscordClient discord = new DiscordClient();
+            Console.WriteLine("Conectando con Discord...");
+            discord.Login(botToken);
 
-            User pasajero1 = ...
-            User pasajero2 = ...
-            User pasajero3 = ...
-            User conductor1 = ...
-            User conductorPool1 = ...
-            UcuRideShare rideShare = new UcuRideShare()
+            CognitiveFace faceRecognizer = new CognitiveFace();
+            DiscordPublisher publisher = new DiscordPublisher(discord, channelId);
+            UcuRideShare rideShare = new UcuRideShare(publisher, faceRecognizer);
 
-            rideShare.Add(conductor1)
-            Se publica en Discord un nuevo conductor!
+            Vehicle vehicle1 = new Vehicle("Toyota", "Corolla", "SBA1234");
+            Vehicle vehicle2 = new Vehicle("Chevrolet", "Onix", "SBB5678");
 
-            rideShare.Add(conductorPool1)
-            Se publica en Discord un nuevo conductor!
+            // Caso 1: conductor Standard, no necesita lentes -> se publica si hay cara.
+            Driver conductor1 = new StandardDriver(
+                "Juan", "Pérez", "12345678", "bill.jpg", vehicle1, "Me gusta la música.", false);
 
-            rideShare.Add(pasajero1)
-            Se publica en Discord nuevo registro de pasajero!
+            // Caso 2: conductor Pool, necesita lentes -> solo se publica si la foto tiene lentes.
+            Driver conductorPool1 = new PoolDriver(
+                "Ana", "Gómez", "87654321", "rick.jpg", vehicle2, "Profesora de Programación II.", true, 4);
 
-            rideShare.Add(pasajero2)
-            Se publica en Discord nuevo registro de pasajero!
+            // Caso 3: pasajero -> solo se publica si la foto tiene una cara.
+            Passenger pasajero1 = new Passenger("Lucía", "Fernández", "11111111", "bill.jpg");
 
-            rideShare.Add(pasajero3)
-            Se publica en Discord nuevo registro de pasajero!
-            */
+            rideShare.Add(conductor1);
+            rideShare.Add(conductorPool1);
+            rideShare.Add(pasajero1);
+
+            Console.WriteLine("Registro finalizado.");
         }
     }
 }

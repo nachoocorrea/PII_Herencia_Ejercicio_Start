@@ -1,13 +1,13 @@
-using System.Dynamic;
+using Ucu.Poo.Cognitive;
 
 namespace Ucu.Poo.RideShare
 {
     public abstract class User
     {
-        protected string Name { get; set; }
-        protected string LastName { get; set; }
-        protected string Id { get; set; }
-        protected string Photo { get; set; }
+        public string Name { get; protected set; }
+        public string LastName { get; protected set; }
+        public string Id { get; protected set; }
+        public string Photo { get; protected set; }
 
         protected User(string name, string lastName, string id, string photo)
         {
@@ -17,6 +17,8 @@ namespace Ucu.Poo.RideShare
             this.Photo = photo;
         }
 
-        public abstract void PublicarEnDiscord();
+        public abstract string ObtenerMensajeBienvenida();
+
+        public abstract bool EsFotoValida(CognitiveFace faceRecognizer);
     }
 }

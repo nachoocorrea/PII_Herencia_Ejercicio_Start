@@ -1,4 +1,6 @@
 using System;
+using Ucu.Poo.Discord;
+using Ucu.Poo.Cognitive;
 
 namespace Ucu.Poo.RideShare
 {
@@ -12,10 +14,15 @@ namespace Ucu.Poo.RideShare
             this.Rating = 0;
         }
 
-        public override void PublicarEnDiscord()
+        public override string ObtenerMensajeBienvenida()
         {
-            Console.WriteLine($"¡Bienvenido/a {this.Name} {this.LastName} a UCURide!");
-            Console.WriteLine($"Foto: {this.Photo}");
+            return $"¡Bienvenido/a {this.Name} {this.LastName} a UCURide!";
+        }
+
+        public override bool EsFotoValida(CognitiveFace faceRecognizer)
+        {
+            CognitiveFace.RecognitionResult resultado = faceRecognizer.Recognize(this.Photo);
+            return resultado.Success && resultado.FaceFound;
         }
     }
 }

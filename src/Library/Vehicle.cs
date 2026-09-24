@@ -2,15 +2,15 @@ namespace Ucu.Poo.RideShare
 {
     public class Vehicle
     {
-        public string Marca { get; set; }
-        public string Modelo { get; set; }
-        public string Patente { get; set; }
+        public string Brand { get; set; }
+        public string Model { get; set; }
+        public string LicensePlate { get; set; }
 
-        public Vehicle(string marca, string modelo, string patente)
+        public Vehicle(string brand, string model, string licensePlate)
         {
-            this.Marca = marca;
-            this.Modelo = modelo;
-            this.Patente = patente;
+            this.Brand = brand;
+            this.Model = model;
+            this.LicensePlate = licensePlate;
         }
     }
 }
