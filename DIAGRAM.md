@@ -1,27 +1,27 @@
 ```mermaid
 classDiagram
-  class Usuario {
+  class User {
     <<abstract>>
-    cedula: string
-    nombre: string
-    apellido: string
-    foto: string
+    id: string
+    name: string
+    lastnae: string
+    photo: string
     PublicarEnDiscord()* void
   }
   class Conductor {
-    calificacion: double
+    rating: double
     bio: string
     PublicarEnDiscord() void
   }
   class Pasajero {
-    calificacion: double
+    rating: double
     PublicarEnDiscord() void
   }
-  class ConductorComun
-  class ConductorPool {
+  class StandardDriver
+  class PoolDriver {
     capacidadMaxima: int
   }
-  class Vehiculo {
+  class Vehicle {
     marca: string
     modelo: string
     patente: string
