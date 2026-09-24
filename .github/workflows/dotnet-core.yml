@@ -42,9 +42,8 @@ jobs:
 
       - name: Install Graphviz
         run: |
-          sudo apt-get update
-          sudo apt-get install -y graphviz
-          dot -V
+          wget https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/15.0.0/ubuntu_24.04_graphviz-15.0.0-cmake.deb
+          sudo dpkg -i ubuntu_24.04_graphviz-15.0.0-cmake.deb
 
       - name: Installing dependencies...
         working-directory: ${{ matrix.project }}
