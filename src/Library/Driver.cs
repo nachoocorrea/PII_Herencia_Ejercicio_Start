@@ -8,9 +8,9 @@ namespace Ucu.Poo.RideShare
         public double Rating { get; set; }
         public string Bio { get; set; }
 
-        public Driver( string name, string lastname, string id, string photo,
+        public Driver( string name, string lastName, string id, string photo,
         Vehicle vehicle, string bio)
-        : base (name, lastname, id, photo)
+        : base (name, lastName, id, photo)
         {
             this.Vehicle = vehicle;
             this.Bio = bio;

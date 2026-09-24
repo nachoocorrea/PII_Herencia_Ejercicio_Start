@@ -9,16 +9,14 @@ namespace Ucu.Poo.RideShare
         protected string Id { get; set; }
         protected string Photo { get; set; }
 
-        protected User(string name, string lastname, string id, string photo)
+        protected User(string name, string lastName, string id, string photo)
         {
             this.Name = name;
-            this.LastName = lastname;
+            this.LastName = lastName;
             this.Id = id;
             this.Photo = photo;
         }
 
         public abstract void PublicarEnDiscord();
-
     }
-
 }
